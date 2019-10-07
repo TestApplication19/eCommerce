@@ -29,8 +29,10 @@ task copyJarToDockerPackage(type: Copy, dependsOn: bootJar){
     from "./build/libs/"
     into "docker/"
     include("ecommercee_1906_01-${version}.jar")
-    rename ("ecommercee_1906_01.jar-${version}", "ecommerce.jar")
+    rename ("ecommercee_1906_01-${version}.jar", "ecommerce.jar")
 }
+
+build.dependsOn copyJarToDockerPackage
 
 jar {
     archiveName 'ecommercee.jar'
@@ -41,8 +43,9 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-web')
     compile('org.projectlombok:lombok')
-    annotationProcessor('org.projectlombok:lombok')
-    compile('com.h2database:h2')
+    annotationProcessor('org.projectlombok:lombok:1.18.10')
     compile('org.postgresql:postgresql:42.2.8')
+
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testCompile('com.h2database:h2')
 }
