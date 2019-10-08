@@ -39,6 +39,6 @@ public class OrderEntity {
             cascade = {CascadeType.MERGE},
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "USER")
+    @JoinColumn(name = "USER_ID")
     private UserEntity user;
 }

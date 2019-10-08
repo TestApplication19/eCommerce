@@ -42,7 +42,7 @@ public class CartEntity {
     private List<CartProduct> products = new ArrayList<>();
 
     @OneToOne(cascade =  CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER")
+    @JoinColumn(name = "USER_ID")
     private UserEntity user;
 }
 
