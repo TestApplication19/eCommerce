@@ -46,7 +46,7 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok:1.18.10')
 
 //    //POSTGRES
-//    compile('org.postgresql:postgresql:42.2.8')
+    compile('org.postgresql:postgresql:42.2.8')
 
     //MySQL
     compile('mysql:mysql-connector-java')
