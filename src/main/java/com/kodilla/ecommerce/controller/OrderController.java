@@ -9,6 +9,8 @@ import com.kodilla.ecommerce.domain.UserEntity;
 import com.kodilla.ecommerce.domain.dto.OrderDto;
 import com.kodilla.ecommerce.maper.OrderMapper;
 import com.kodilla.ecommerce.service.OrderDbService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,20 @@ public class OrderController {
 
     @Autowired
     private OrderDbService orderDbService;
+
+    @Autowired
+    RabbitTemplate queueSender;
+
+    @GetMapping(value = "queue")
+    String sendToQueue(@RequestParam(value = "message", defaultValue = "rabbit") String message){
+        queueSender.convertAndSend("rab", message);
+        return String.format("Message %s sent! See logs...", message);
+    }
+
+    @RabbitListener(queues = "rab")
+    public void rabbitLisener (String s){
+         System.out.println(s);
+    }
 
     @GetMapping(value = "getOrders")
     public List<OrderDto> getOrders() {
