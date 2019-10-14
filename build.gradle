@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
+        springBootVersion = '2.1.2.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -8,51 +8,4 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
-}
-
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-group = 'com.kodilla'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-task copyJarToDockerPackage(type: Copy, dependsOn: bootJar){
-    from "./build/libs/"
-    into "docker/"
-    include("ecommerce-${version}.jar")
-    rename ("ecommerce-${version}.jar", "ecommerce.jar")
-}
-
-build.dependsOn copyJarToDockerPackage
-
-dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    compile('org.projectlombok:lombok')
-    annotationProcessor('org.projectlombok:lombok:1.18.10')
-
-    //POSTGRES
-    compile('org.postgresql:postgresql:42.2.8')
-
-    //MySQL
-    compile('mysql:mysql-connector-java')
-
-    // SWAGGER
-    compile('io.springfox:springfox-swagger2:2.7.0')
-    compile('io.springfox:springfox-swagger-ui:2.7.0')
-
-    //rabbitmq
-    //docker container
-    //docker run -d --hostname localhost --name queue -p 15672:15672 -p 5672:5672 rabbitmq:3.8-management-alpine
-    compile('org.springframework.boot:spring-boot-starter-amqp')
-    // TEST
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testCompile('com.h2database:h2')
 }

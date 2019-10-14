@@ -1,0 +1,66 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.kodilla'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+task copyJarToDockerPackage(type: Copy, dependsOn: bootJar){
+    from "./build/libs/"
+    into "docker/"
+    include("store-warsaw-${version}.jar")
+    rename ("store-warsaw-${version}.jar", "store-warsaw.jar")
+}
+
+build.dependsOn copyJarToDockerPackage
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    compile('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok:1.18.10')
+
+    //POSTGRES
+    compile('org.postgresql:postgresql:42.2.8')
+
+    //MySQL
+    compile('mysql:mysql-connector-java')
+
+    // SWAGGER
+    compile('io.springfox:springfox-swagger2:2.7.0')
+    compile('io.springfox:springfox-swagger-ui:2.7.0')
+
+    //rabbitmq
+    //docker container
+    //docker run -d --hostname localhost --name queue -p 15672:15672 -p 5672:5672 rabbitmq:3.8-management-alpine
+    compile('org.springframework.boot:spring-boot-starter-amqp')
+
+    //JSON
+    compile('com.fasterxml.jackson.core:jackson-annotations:2.10.0')
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.0'
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+
+    // TEST
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testCompile('com.h2database:h2')
+}
