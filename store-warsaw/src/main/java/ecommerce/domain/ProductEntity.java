@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import java.util.List;
 @Table(name = "PRODUCTS")
 public class ProductEntity {
 
-    public ProductEntity(String name, String description, double price) {
+    public ProductEntity(String name, String description, BigDecimal price) {
 //        this.id = id;
         this.name = name;
         this.description = description;
@@ -28,14 +30,14 @@ public class ProductEntity {
     @Column(name = "PRODUCT_ID", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "PRICE")
-    private double price;
+    @Column(name = "PRICE", scale = 2)
+    private BigDecimal price;
 
 
     @OneToMany(

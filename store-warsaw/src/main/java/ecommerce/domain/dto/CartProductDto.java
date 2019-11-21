@@ -1,5 +1,7 @@
 package ecommerce.domain.dto;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,6 @@ public class CartProductDto {
     private Long id;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private int quantity;
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class OrderedProductDto implements Serializable {
     @JsonProperty("description")
     private String description;
     @JsonProperty("price")
-    private double price;
+    private BigDecimal price;
     @JsonProperty("quantity")
     private int quantity;
 }
